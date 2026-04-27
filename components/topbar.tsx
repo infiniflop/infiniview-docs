@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { APP_URL, MARKETING_URL } from "./nav-config";
@@ -20,7 +19,7 @@ export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void })
   return (
     <header className="sticky top-0 z-40 h-[var(--topbar-h)] border-b border-border bg-bg/85 backdrop-blur-[10px]">
       <div className="mx-auto flex h-full max-w-[1480px] items-center gap-4 px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+        <a href={MARKETING_URL} className="flex items-center gap-2.5 shrink-0">
           <span className="brand-mark" />
           <span className="text-[14px] font-bold tracking-[-0.02em]">
             INFINIVIEW<span className="text-lime">/</span>
@@ -28,7 +27,7 @@ export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void })
           <span className="ml-1 hidden font-mono text-[10.5px] uppercase tracking-[0.18em] text-text-muted sm:inline">
             docs
           </span>
-        </Link>
+        </a>
 
         <button
           type="button"
