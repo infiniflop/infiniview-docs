@@ -1,11 +1,36 @@
 import type { Metadata } from "next";
 import { DocPage } from "@/components/doc-page";
+import { Callout } from "@/components/callout";
 
 export const metadata: Metadata = {
   title: "Exports & proof bundles",
   description:
     "CSV exports, replay artifacts, and proof bundles produce the handoff artifacts you need to triage outside the dashboard.",
 };
+
+const csvColumns = [
+  "findingId",
+  "reviewId",
+  "scanRunId",
+  "severity",
+  "category",
+  "exploitability",
+  "confidence",
+  "priorityScore",
+  "title",
+  "description",
+  "fingerprint",
+  "primaryFile",
+  "lineStart",
+  "lineEnd",
+  "sourcePhase",
+  "scannerName",
+  "ruleId",
+  "deltaStatus",
+  "suppressed",
+  "suppressionScope",
+  "createdAt",
+];
 
 export default function ExportsPage() {
   return (
@@ -16,21 +41,45 @@ export default function ExportsPage() {
       toc={[
         { id: "run-csv", title: "Run CSV", depth: 2 },
         { id: "backlog-csv", title: "Backlog CSV", depth: 2 },
+        { id: "columns", title: "CSV columns", depth: 2 },
         { id: "replay", title: "Replay artifacts", depth: 2 },
         { id: "proof-bundle", title: "Proof bundle", depth: 2 },
+        { id: "summary", title: "Summary", depth: 2 },
       ]}
     >
       <h2 id="run-csv" className="anchor-target">
         Run CSV
       </h2>
-      <p>Exports the persisted findings for a single owned scan run.</p>
-      <pre><code>{`GET /api/scan-runs/{id}/csv`}</code></pre>
+      <p>
+        Exports the persisted findings for one owned scan run. Available once the run reaches a terminal status (<code>completed</code>, <code>degraded</code>, <code>blocked</code>, or <code>failed</code>).
+      </p>
+      <pre><code>{`GET /api/scan-runs/{id}/csv
+# filename: infiniview-scan-run-{id}-findings.csv`}</code></pre>
 
       <h2 id="backlog-csv" className="anchor-target">
         Backlog CSV
       </h2>
-      <p>Exports the filtered findings backlog for the signed-in user — same filters as the Findings surface.</p>
-      <pre><code>{`GET /api/security-findings/export`}</code></pre>
+      <p>
+        Exports the filtered findings backlog for the signed-in user. Same shape as the per-run CSV, but spans every owned run.
+      </p>
+      <pre><code>{`GET /api/security-findings/export?scope=active|archived|all
+                                  &reviewId=...&scanRunId=...
+# filename: infiniview-security-findings.csv`}</code></pre>
+      <Callout tone="info">
+        <code>scope=active</code> is the default: it excludes findings from archived reviews. Use <code>scope=all</code> when you need a complete dump across active and archived runs.
+      </Callout>
+
+      <h2 id="columns" className="anchor-target">
+        CSV columns
+      </h2>
+      <p>Both CSV exports share the same columns, in this order:</p>
+      <div className="not-prose mt-3 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-3">
+        {csvColumns.map((c) => (
+          <div key={c} className="bg-bg-card px-3 py-2 font-mono text-[11px] text-text-secondary">
+            {c}
+          </div>
+        ))}
+      </div>
 
       <h2 id="replay" className="anchor-target">
         Replay artifacts
@@ -46,6 +95,9 @@ export default function ExportsPage() {
       </p>
       <pre><code>{`GET /api/security-findings/{id}/bundle`}</code></pre>
 
+      <h2 id="summary" className="anchor-target">
+        Summary
+      </h2>
       <table>
         <thead>
           <tr>

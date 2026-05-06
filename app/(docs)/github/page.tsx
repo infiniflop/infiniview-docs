@@ -22,6 +22,7 @@ export default function GithubPage() {
         { id: "debounce", title: "Push debounce", depth: 2 },
         { id: "ignored", title: "Ignored PRs", depth: 2 },
         { id: "commands", title: "Trusted commands", depth: 2 },
+        { id: "check", title: "Merge-blocking check", depth: 2 },
         { id: "unsupported", title: "Unsupported apps", depth: 2 },
       ]}
     >
@@ -29,9 +30,12 @@ export default function GithubPage() {
         Events that can trigger
       </h2>
       <p>
-        Infiniview listens for <code>opened</code>, <code>synchronize</code>, and <code>ready_for_review</code> pull request events. Draft PRs are skipped until they&rsquo;re marked ready for review.
+        Infiniview listens for <code>opened</code>, <code>synchronize</code>, and <code>ready_for_review</code> pull request events. Draft PRs are skipped until they’re marked ready for review. Comment commands are read from <code>issue_comment</code> events on PRs.
       </p>
       <pre><code>{`POST /api/github/webhook   # GitHub-signed webhook receiver`}</code></pre>
+      <Callout tone="info">
+        The webhook receiver verifies the <code>X-Hub-Signature-256</code> HMAC signature and rejects unsigned requests. Deliveries are idempotent by <code>X-GitHub-Delivery</code> and considered stale after 15 minutes.
+      </Callout>
 
       <h2 id="scope" className="anchor-target">
         Auto-review scope
@@ -55,7 +59,7 @@ export default function GithubPage() {
         Push debounce
       </h2>
       <p>
-        <code>synchronize</code> events inside the configured debounce window are ignored, so a burst of commits doesn&rsquo;t start redundant scans. The debounce window applies per PR.
+        <code>synchronize</code> events that land inside the configured debounce window are coalesced, so a burst of commits doesn’t start redundant scans. The window applies per PR. Defaults: debounce off, 10-minute window when enabled. The window can be set to any value between 1 and 120 minutes.
       </p>
 
       <h2 id="ignored" className="anchor-target">
@@ -69,7 +73,7 @@ export default function GithubPage() {
         Trusted commands
       </h2>
       <p>
-        These commands only run for owners, members, collaborators, or users with write-or-better permission on the repository. Comments from anyone else are ignored.
+        These commands only run for owners, members, or collaborators on the repository, or users with <code>write</code>, <code>maintain</code>, or <code>admin</code> permission. Comments from anyone else are ignored.
       </p>
 
       <table>
@@ -101,11 +105,18 @@ export default function GithubPage() {
         </tbody>
       </table>
 
+      <h2 id="check" className="anchor-target">
+        Merge-blocking check
+      </h2>
+      <p>
+        After every scan, Infiniview posts a check run on the PR. The check fails when the run produces any <code>critical</code> or <code>high</code> finding, blocking merge. <code>medium</code>, <code>low</code>, and <code>info</code> findings are reported but non-blocking.
+      </p>
+
       <h2 id="unsupported" className="anchor-target">
         Unsupported apps
       </h2>
       <p>
-        If Infiniview can&rsquo;t run the repository as a supported browser web app, the PR check completes neutrally with an <strong>Unsupported App</strong> status instead of returning a misleading pass. Coverage gaps are tracked in trust — see <Link href="/trust">Trust &amp; readiness</Link>.
+        Infiniview currently supports browser-based web applications. If the repository can’t be served as one, the scan stops in a <strong>blocked</strong> state with an <strong>Unsupported App</strong> message — the PR check completes neutrally instead of returning a misleading pass. Coverage gaps from skipped runtime testing are tracked in <Link href="/trust">Trust &amp; readiness</Link>.
       </p>
     </DocPage>
   );

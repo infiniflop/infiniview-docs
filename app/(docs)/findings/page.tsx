@@ -17,8 +17,10 @@ export default function FindingsPage() {
       description="Each finding carries enough context to decide without guessing: identity, location, evidence, replay, delta, and suppression state."
       toc={[
         { id: "anatomy", title: "Anatomy of a finding", depth: 2 },
+        { id: "severity", title: "Severity & merge blocking", depth: 2 },
         { id: "delta", title: "Delta state", depth: 2 },
-        { id: "verified", title: "Verified vs unverified", depth: 2 },
+        { id: "verified", title: "Exploitability", depth: 2 },
+        { id: "evidence", title: "Evidence & replay", depth: 2 },
         { id: "suppressions", title: "Suppressions", depth: 2 },
       ]}
     >
@@ -29,11 +31,59 @@ export default function FindingsPage() {
       <ul>
         <li>Severity, category, confidence, exploitability, and source phase.</li>
         <li>Stable fingerprint, primary file, line range, scanner, and rule metadata.</li>
-        <li>Attack path, affected files, evidence, suggested fix, and parsed fix prompt.</li>
+        <li>Title, description, attack path, affected files, evidence, and remediation guidance.</li>
         <li>Runtime replay, interaction replay, proof-of-concept, and bundle artifacts when present.</li>
-        <li>Delta state: new, recurring, regressed, fixed, or suppressed.</li>
+        <li>Delta state: <code>new</code>, <code>recurring</code>, <code>regressed</code>, <code>fixed</code>, or <code>suppressed</code>.</li>
         <li>Repo-scoped or user-scoped suppression memory.</li>
       </ul>
+
+      <h2 id="severity" className="anchor-target">
+        Severity & merge blocking
+      </h2>
+      <p>Severity is one of:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Severity</th>
+            <th>Effect on PR check</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <code>critical</code>
+            </td>
+            <td>Blocks merge.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>high</code>
+            </td>
+            <td>Blocks merge.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>medium</code>
+            </td>
+            <td>Reported, non-blocking.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>low</code>
+            </td>
+            <td>Reported, non-blocking.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>info</code>
+            </td>
+            <td>Reported, non-blocking. Excluded from the unique-vulnerabilities count on the dashboard overview.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Set the minimum severity persisted to findings via <Link href="/configuration">scan configuration</Link>’s severity threshold.
+      </p>
 
       <h2 id="delta" className="anchor-target">
         Delta state
@@ -77,42 +127,58 @@ export default function FindingsPage() {
             <td>
               <code>suppressed</code>
             </td>
-            <td>Active suppression (repo-scoped or user-scoped) hides this fingerprint.</td>
+            <td>An active suppression (repo-scoped or user-scoped) hides this fingerprint.</td>
           </tr>
         </tbody>
       </table>
 
       <h2 id="verified" className="anchor-target">
-        Verified vs unverified
+        Exploitability
       </h2>
-      <p>
-        A <strong>verified</strong> finding was confirmed through runtime or interaction testing. It&rsquo;s stronger than an unverified static hit, but you should still inspect the evidence and trust context before prioritizing work.
-      </p>
+      <p>Each finding has one of three exploitability states:</p>
+      <ul>
+        <li>
+          <code>verified</code> — confirmed through runtime or interaction testing. Stronger than a static-only hit.
+        </li>
+        <li>
+          <code>unverified</code> — reported by analysis but not confirmed runtime-side.
+        </li>
+        <li>
+          <code>not_tested</code> — runtime testing didn’t reach this surface (for example, missing credentials, the app couldn’t be served, or the relevant runtime agent was disabled).
+        </li>
+      </ul>
 
       <Callout tone="info">
         Trust score weights verified findings differently from unverified ones. See <Link href="/trust">Trust &amp; readiness</Link>.
       </Callout>
 
+      <h2 id="evidence" className="anchor-target">
+        Evidence & replay
+      </h2>
+      <p>
+        Where applicable, a finding includes a replay artifact and a downloadable proof bundle. The bundle packages identity, location, replay data, proof-of-concept variants, and expected behavior into a single export — useful for handing off to engineering or filing an issue.
+      </p>
+      <pre><code>{`GET /api/security-findings/{id}/replay   # latest replay artifact
+GET /api/security-findings/{id}/bundle   # proof bundle`}</code></pre>
+
       <h2 id="suppressions" className="anchor-target">
         Suppressions
       </h2>
-      <p>
-        Suppressions are fingerprint-based:
-      </p>
+      <p>Suppressions are fingerprint-based:</p>
       <ul>
         <li>
           <strong>Repo scope</strong> — hides the finding only for that repository.
         </li>
         <li>
-          <strong>User scope</strong> — applies across that user&rsquo;s matching findings, regardless of repo.
+          <strong>User scope</strong> — applies across that user’s matching findings, regardless of repo.
         </li>
       </ul>
       <p>
-        Deleting the suppression restores the finding presentation without deleting history.
+        When multiple suppressions match the same fingerprint, the most recent one wins. Deleting a suppression restores the finding presentation without touching history.
       </p>
-      <pre><code>{`GET    /api/finding-suppressions
-POST   /api/finding-suppressions
-DELETE /api/finding-suppressions/{id}`}</code></pre>
+      <pre><code>{`GET    /api/finding-suppressions          # paginated; max 100/page
+POST   /api/finding-suppressions          # { query, scope, reviewId?, scanRunId?, repoFullName? }
+DELETE /api/finding-suppressions/{id}     # 204 on success`}</code></pre>
     </DocPage>
   );
 }

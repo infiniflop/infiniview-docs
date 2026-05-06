@@ -52,6 +52,7 @@ export default function IntroPage() {
       description="Launch scans, connect GitHub, configure scanners, review forensic findings, and export proof."
       toc={[
         { id: "what-is-infiniview", title: "What is Infiniview", depth: 2 },
+        { id: "capabilities", title: "What Infiniview ships", depth: 2 },
         { id: "how-the-docs-are-organized", title: "How the docs are organized", depth: 2 },
         { id: "product-surfaces", title: "Product surfaces", depth: 2 },
         { id: "next", title: "What to read next", depth: 2 },
@@ -85,8 +86,35 @@ export default function IntroPage() {
       </p>
 
       <Callout tone="info">
-        These docs cover scan triggers, GitHub automation, scanner and agent configuration, findings, evidence, exports, and the API contract.
+        These docs cover scan triggers, GitHub automation, scanner and agent configuration, findings, evidence, exports, and the API contract. Infiniview is currently in <strong>public beta</strong>.
       </Callout>
+
+      <h2 id="capabilities" className="anchor-target">
+        What Infiniview ships
+      </h2>
+      <p>
+        Five capabilities make up a scan. Every run can use all five — coverage on any one is reported back so you can read trust at a glance.
+      </p>
+      <ul>
+        <li>
+          <strong>Code review</strong> — reviews changed code for correctness, maintainability, and security-sensitive logic.
+        </li>
+        <li>
+          <strong>Security analysis</strong> — combines static analysis, dependency audits, secret detection, and configuration review across 25 scanners.
+        </li>
+        <li>
+          <strong>Runtime verification</strong> — confirms high-confidence findings against the running application when a safe test target is available.
+        </li>
+        <li>
+          <strong>Browser interaction testing</strong> — exercises reachable user flows and records evidence for broken or risky behavior.
+        </li>
+        <li>
+          <strong>Evidence packages</strong> — collects reproducible context, affected locations, and remediation guidance for confirmed issues.
+        </li>
+      </ul>
+      <p>
+        On pull requests, scans post a check whose <strong>critical</strong> and <strong>high</strong> severity findings block merge. <strong>Medium</strong>, <strong>low</strong>, and <strong>info</strong> are reported but non-blocking.
+      </p>
 
       <h2 id="how-the-docs-are-organized" className="anchor-target">
         How the docs are organized

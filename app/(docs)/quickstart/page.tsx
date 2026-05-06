@@ -33,7 +33,7 @@ export default function QuickstartPage() {
       </p>
 
       <Callout tone="info">
-        Trusted commands (<code>@infiniview review</code>, <code>@infiniview ignore</code>, <code>@infiniview help</code>) require owner, member, collaborator, or write-or-better permission on the repo. Comments from other roles are ignored.
+        Trusted commands (<code>@infiniview review</code>, <code>@infiniview ignore</code>, <code>@infiniview help</code>) require owner, member, or collaborator status on the repository, or <code>write</code>, <code>maintain</code>, or <code>admin</code> permission. Comments from other roles are ignored.
       </Callout>
 
       <h2 id="1-sign-in" className="anchor-target">
@@ -49,9 +49,9 @@ export default function QuickstartPage() {
       <p>
         Connecting GitHub lets Infiniview list the repositories available for manual scans and lets the GitHub App attribute installations to your account. The handshake is read-only at this stage.
       </p>
-      <pre><code>{`GET /api/github/connect      # start OAuth
-GET /api/github/callback     # OAuth callback (handled by Infiniview)
-GET /api/github/disconnect   # remove the connection`}</code></pre>
+      <pre><code>{`GET    /api/github/connect      # start OAuth
+GET    /api/github/callback     # OAuth callback (handled by Infiniview)
+DELETE /api/github/disconnect   # remove the connection`}</code></pre>
 
       <h2 id="3-install-app" className="anchor-target">
         3. Install the Infiniview GitHub App
