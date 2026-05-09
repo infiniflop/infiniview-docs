@@ -49,14 +49,6 @@ export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void })
 
         <nav className="hidden items-center gap-5 font-mono text-[11px] tracking-[0.04em] text-text-secondary lg:flex">
           <a
-            className="transition-colors hover:text-lime"
-            href={MARKETING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            marketing
-          </a>
-          <a
             className="flex items-center gap-1.5 transition-colors hover:text-lime"
             href="https://github.com/infiniflop/infiniview-docs"
             target="_blank"

@@ -62,9 +62,6 @@ export function DocsShell({ children }: { children: React.ReactNode }) {
             Product documentation
           </span>
           <div className="ml-auto flex items-center gap-5 font-mono text-[10.5px] uppercase tracking-[0.16em] text-text-secondary">
-            <a className="hover:text-lime" href="https://infiniview.dev" target="_blank" rel="noopener noreferrer">
-              Marketing
-            </a>
             <a className="hover:text-lime" href="https://app.infiniview.dev" target="_blank" rel="noopener noreferrer">
               Dashboard
             </a>
