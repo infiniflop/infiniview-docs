@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { APP_URL, MARKETING_URL } from "./nav-config";
 import { SearchDesktopTrigger, SearchMobileTrigger, SearchDialog } from "./search";
+import { ThemeToggle } from "./theme-toggle";
 
 export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void }) {
   const [mac, setMac] = useState(false);
@@ -43,6 +44,7 @@ export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void })
         </a>
 
         <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
           <SearchMobileTrigger onClick={() => setSearchOpen(true)} />
           <button
             type="button"
@@ -72,6 +74,7 @@ export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void })
           >
             github
           </a>
+          <ThemeToggle />
         </nav>
 
         <a

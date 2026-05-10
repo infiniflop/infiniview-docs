@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --font-sans: var(--font-inter-tight), 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: var(--font-jetbrains), 'JetBrains Mono', ui-monospace, monospace;
@@ -26,6 +28,37 @@
   --background: #07080b;
   --foreground: #f4f5f1;
   --topbar-h: 56px;
+  color-scheme: dark;
+}
+
+.light {
+  --color-bg: #fafaf6;
+  --color-bg-elevated: #f2f2ec;
+  --color-bg-card: #ececdf;
+  --color-bg-card-hover: #e3e3d4;
+  --color-border: #e0e0d3;
+  --color-border-accent: #c8c8b6;
+  --color-text: #0c0d11;
+  --color-text-secondary: #4d5159;
+  --color-text-muted: #7d818b;
+
+  --background: #fafaf6;
+  --foreground: #0c0d11;
+
+  color-scheme: light;
+}
+
+.light .text-lime { color: #5e7c0f; }
+.light .text-amber { color: #a16207; }
+.light .text-cyan { color: #0369a1; }
+.light .text-red { color: #c43030; }
+.light .text-green { color: #15803d; }
+.light .text-teal { color: #0f766e; }
+.light .hover\:text-lime:hover { color: #5e7c0f; }
+
+.light ::selection {
+  background: var(--color-lime);
+  color: #07080b;
 }
 
 * {
@@ -430,3 +463,8 @@ kbd {
   padding: 1px 6px;
   border-radius: 3px;
 }
+
+/* Light-mode overrides for scrollbar + brand mark */
+.light .scroll-area::-webkit-scrollbar-thumb { background: #c8c8b6; }
+.light .scroll-area::-webkit-scrollbar-thumb:hover { background: #b0b09e; }
+.light .brand-mark::after { border-color: #fafaf6; }
