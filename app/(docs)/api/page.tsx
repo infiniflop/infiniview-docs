@@ -145,16 +145,16 @@ export default function ApiPage() {
             {group.endpoints.map((ep, i) => (
               <div
                 key={`${ep.method}-${ep.path}-${i}`}
-                className="grid grid-cols-[80px_1fr] items-center gap-3 border-t border-border px-4 py-2.5 first:border-t-0 sm:grid-cols-[80px_1fr_auto]"
+                className="grid grid-cols-[auto_1fr] items-baseline gap-x-3 gap-y-1 border-t border-border px-3 py-2.5 first:border-t-0 sm:grid-cols-[80px_1fr_auto] sm:px-4"
               >
                 <span
                   className={`font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] ${methodColor[ep.method] ?? "text-text-secondary"}`}
                 >
                   {ep.method}
                 </span>
-                <code className="font-mono text-[12.5px] text-text">{ep.path}</code>
+                <code className="font-mono text-[11.5px] text-text break-all sm:text-[12.5px] sm:break-normal">{ep.path}</code>
                 {ep.note && (
-                  <span className="font-mono text-[10.5px] text-text-muted sm:text-right">
+                  <span className="col-span-full font-mono text-[10.5px] text-text-muted sm:col-span-1 sm:text-right">
                     {ep.note}
                   </span>
                 )}

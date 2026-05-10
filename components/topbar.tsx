@@ -3,10 +3,12 @@
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { APP_URL, MARKETING_URL } from "./nav-config";
-import { SearchTrigger } from "./search";
+import { SearchDesktopTrigger, SearchMobileTrigger, SearchDialog } from "./search";
 
 export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void }) {
   const [mac, setMac] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
   useEffect(() => {
     setMac(
       typeof navigator !== "undefined" &&
@@ -14,6 +16,17 @@ export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void })
           ? (navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData?.platform === "macOS"
           : /Mac|iPhone|iPad/.test(navigator.platform)),
     );
+  }, []);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen((o) => !o);
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   return (
@@ -29,22 +42,25 @@ export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void })
           </span>
         </a>
 
-        <button
-          type="button"
-          aria-label="Toggle navigation"
-          onClick={onMobileNavToggle}
-          className="ml-auto flex h-8 w-8 items-center justify-center border border-border text-text-secondary lg:hidden"
-        >
-          <span className="sr-only">Menu</span>
-          <span className="relative block h-3 w-4">
-            <span className="absolute inset-x-0 top-0 h-px bg-current" />
-            <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-current" />
-            <span className="absolute inset-x-0 bottom-0 h-px bg-current" />
-          </span>
-        </button>
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <SearchMobileTrigger onClick={() => setSearchOpen(true)} />
+          <button
+            type="button"
+            aria-label="Toggle navigation"
+            onClick={onMobileNavToggle}
+            className="flex h-8 w-8 items-center justify-center border border-border text-text-secondary"
+          >
+            <span className="sr-only">Menu</span>
+            <span className="relative block h-3 w-4">
+              <span className="absolute inset-x-0 top-0 h-px bg-current" />
+              <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-current" />
+              <span className="absolute inset-x-0 bottom-0 h-px bg-current" />
+            </span>
+          </button>
+        </div>
 
         <div className="hidden lg:block flex-1 max-w-[420px] ml-auto">
-          <SearchTrigger mac={mac} />
+          <SearchDesktopTrigger mac={mac} onClick={() => setSearchOpen(true)} />
         </div>
 
         <nav className="hidden items-center gap-5 font-mono text-[11px] tracking-[0.04em] text-text-secondary lg:flex">
@@ -68,6 +84,8 @@ export function Topbar({ onMobileNavToggle }: { onMobileNavToggle: () => void })
           <ArrowUpRight className="h-3 w-3" />
         </a>
       </div>
+
+      {searchOpen && <SearchDialog onClose={() => setSearchOpen(false)} />}
     </header>
   );
 }

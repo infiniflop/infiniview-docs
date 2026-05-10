@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { OnThisPage, type TocItem } from "./on-this-page";
+import { OnThisPage, MobileToc, type TocItem } from "./on-this-page";
 import { Pager } from "./pager";
 import { FLAT_NAV, NAV } from "./nav-config";
 
@@ -32,35 +32,41 @@ export function DocPage({
   return (
     <div className="grid grid-cols-1 gap-12 xl:grid-cols-[minmax(0,1fr)_220px]">
       <article className="min-w-0">
-        <div className="mb-6 flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.16em] text-text-muted">
-          <Link href="/" className="hover:text-lime">
+        <div className="mb-6 flex items-center gap-2 overflow-x-auto font-mono text-[10.5px] uppercase tracking-[0.16em] text-text-muted">
+          <Link href="/" className="shrink-0 hover:text-lime">
             Docs
           </Link>
           {breadcrumb && (
             <>
-              <ChevronRight className="h-3 w-3 text-text-muted" />
-              <span>{breadcrumb}</span>
+              <ChevronRight className="h-3 w-3 shrink-0 text-text-muted" />
+              <span className="shrink-0">{breadcrumb}</span>
             </>
           )}
           {item && (
             <>
-              <ChevronRight className="h-3 w-3 text-text-muted" />
-              <span className="text-text-secondary">{item.title}</span>
+              <ChevronRight className="h-3 w-3 shrink-0 text-text-muted" />
+              <span className="shrink-0 text-text-secondary">{item.title}</span>
             </>
           )}
         </div>
 
         <header className="mb-10 border-b border-border pb-8">
-          <h1 className="text-[clamp(34px,4.4vw,52px)] font-extrabold leading-[1.02] tracking-[-0.045em]">
+          <h1 className="text-[clamp(28px,4.4vw,52px)] font-extrabold leading-[1.02] tracking-[-0.045em]">
             {title}
           </h1>
           {description && (
-            <p className="mt-5 max-w-3xl text-[17px] leading-relaxed text-text-secondary">
+            <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-text-secondary sm:text-[17px]">
               {description}
             </p>
           )}
           {actions && <div className="mt-6 flex flex-wrap gap-2">{actions}</div>}
         </header>
+
+        {toc.length > 0 && (
+          <div className="xl:hidden mb-8">
+            <MobileToc items={toc} />
+          </div>
+        )}
 
         <div className="prose max-w-3xl">{children}</div>
 

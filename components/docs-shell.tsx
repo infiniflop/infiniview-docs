@@ -53,15 +53,17 @@ export function DocsShell({ children }: { children: React.ReactNode }) {
       </div>
 
       <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-[1480px] flex-wrap items-center gap-4 px-4 py-6 md:px-6">
-          <span className="brand-mark" />
-          <span className="text-[13px] font-bold tracking-[-0.02em]">
-            INFINIVIEW<span className="text-lime">/</span> docs
-          </span>
+        <div className="mx-auto flex max-w-[1480px] flex-col gap-4 px-4 py-6 sm:flex-row sm:flex-wrap sm:items-center md:px-6">
+          <div className="flex items-center gap-2.5">
+            <span className="brand-mark" />
+            <span className="text-[13px] font-bold tracking-[-0.02em]">
+              INFINIVIEW<span className="text-lime">/</span> docs
+            </span>
+          </div>
           <span className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-text-muted">
             Product documentation
           </span>
-          <div className="ml-auto flex items-center gap-5 font-mono text-[10.5px] uppercase tracking-[0.16em] text-text-secondary">
+          <div className="flex items-center gap-5 font-mono text-[10.5px] uppercase tracking-[0.16em] text-text-secondary sm:ml-auto">
             <a className="hover:text-lime" href="https://app.infiniview.dev" target="_blank" rel="noopener noreferrer">
               Dashboard
             </a>

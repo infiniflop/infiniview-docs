@@ -215,11 +215,19 @@ body {
 .prose pre {
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  padding: 16px 18px;
+  padding: 14px 16px;
   overflow-x: auto;
-  font-size: 12.5px;
+  -webkit-overflow-scrolling: touch;
+  font-size: 12px;
   line-height: 1.65;
   color: var(--color-text-secondary);
+}
+
+@media (min-width: 640px) {
+  .prose pre {
+    padding: 16px 18px;
+    font-size: 12.5px;
+  }
 }
 
 .prose pre code {
@@ -248,6 +256,16 @@ body {
   border-collapse: collapse;
   font-size: 13.5px;
   border: 1px solid var(--color-border);
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+  .prose table {
+    display: table;
+    overflow-x: visible;
+  }
 }
 .prose table thead th {
   text-align: left;

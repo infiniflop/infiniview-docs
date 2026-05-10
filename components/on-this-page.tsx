@@ -1,9 +1,50 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type TocItem = { id: string; title: string; depth?: 2 | 3 };
+
+export function MobileToc({ items }: { items: TocItem[] }) {
+  const [open, setOpen] = useState(false);
+
+  if (items.length === 0) return null;
+
+  return (
+    <div className="border border-border">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center justify-between px-4 py-3 font-mono text-[10.5px] uppercase tracking-[0.18em] text-text-muted"
+      >
+        On this page
+        <ChevronDown
+          className={cn(
+            "h-3.5 w-3.5 transition-transform",
+            open && "rotate-180",
+          )}
+        />
+      </button>
+      {open && (
+        <ul className="border-t border-border px-4 py-3 space-y-1.5">
+          {items.map((item) => (
+            <li key={item.id}>
+              <a
+                href={`#${item.id}`}
+                onClick={() => setOpen(false)}
+                className="block text-[13px] text-text-secondary transition-colors hover:text-lime"
+                style={{ paddingLeft: (item.depth ?? 2) === 3 ? "12px" : undefined }}
+              >
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 export function OnThisPage({ items }: { items: TocItem[] }) {
   const [active, setActive] = useState<string | null>(items[0]?.id ?? null);

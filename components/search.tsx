@@ -5,37 +5,36 @@ import { useRouter } from "next/navigation";
 import { Search, ArrowRight, CornerDownLeft } from "lucide-react";
 import { FLAT_NAV, NAV } from "./nav-config";
 
-export function SearchTrigger({ mac }: { mac: boolean }) {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    function onKeyDown(e: KeyboardEvent) {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setOpen((o) => !o);
-      }
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
-
+export function SearchDesktopTrigger({ mac, onClick }: { mac: boolean; onClick: () => void }) {
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="group relative flex h-9 w-full items-center border border-border bg-bg-elevated/70 pl-8 pr-12 text-[13px] text-text-muted transition-colors hover:border-border-accent"
-      >
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-text-muted" />
-        Search docs
-        <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
-          {mac ? "⌘K" : "Ctrl K"}
-        </kbd>
-      </button>
-      {open && <SearchDialog onClose={() => setOpen(false)} />}
-    </>
+    <button
+      type="button"
+      onClick={onClick}
+      className="group relative flex h-9 w-full items-center border border-border bg-bg-elevated/70 pl-8 pr-12 text-[13px] text-text-muted transition-colors hover:border-border-accent"
+    >
+      <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-text-muted" />
+      Search docs
+      <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2">
+        {mac ? "⌘K" : "Ctrl K"}
+      </kbd>
+    </button>
   );
 }
+
+export function SearchMobileTrigger({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      aria-label="Search docs"
+      onClick={onClick}
+      className="flex h-8 w-8 items-center justify-center border border-border text-text-secondary transition-colors hover:border-border-accent hover:text-text"
+    >
+      <Search className="h-3.5 w-3.5" />
+    </button>
+  );
+}
+
+export { SearchDialog };
 
 function SearchDialog({ onClose }: { onClose: () => void }) {
   const router = useRouter();
