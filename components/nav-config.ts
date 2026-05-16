@@ -27,6 +27,7 @@ export const NAV: NavGroup[] = [
       { title: "Scan workflow", href: "/workflow", description: "Trigger, snapshot, sandbox, proof, decide." },
       { title: "GitHub automation", href: "/github", description: "PR scans, debounce, trusted commands, ignored PRs." },
       { title: "Configuration", href: "/configuration", description: "Dashboard defaults, repo overrides, frozen snapshots." },
+      { title: "Billing & plans", href: "/billing", description: "Plan status, checkout, upgrades, cancellation." },
     ],
   },
   {
@@ -47,6 +48,8 @@ export const NAV: NavGroup[] = [
     label: "Reference",
     items: [
       { title: "API contracts", href: "/api", description: "REST API endpoints for scans, findings, config, and more." },
+      { title: "Troubleshooting", href: "/troubleshooting", description: "Common scan issues and how to resolve them." },
+      { title: "Glossary", href: "/glossary", description: "Definitions for the terminology used across the docs." },
       { title: "Operator FAQ", href: "/faq", description: "Common questions about scans, findings, and configuration." },
     ],
   },
