@@ -104,6 +104,62 @@ const faqs = [
       </>
     ),
   },
+  {
+    q: "Can I run Infiniview on private repositories?",
+    a: (
+      <>
+        Yes. The GitHub App requests read access only to repositories you explicitly install it on. Private and public repositories work identically.
+      </>
+    ),
+  },
+  {
+    q: "How are repo secrets stored?",
+    a: (
+      <>
+        Encrypted at rest with AES-256-GCM. Values are decrypted server-side only when injected into the sandbox at scan time. Listing endpoints return key names and metadata only — values are masked. Sandboxes are ephemeral and torn down at the end of each run.
+      </>
+    ),
+  },
+  {
+    q: "Does Infiniview support monorepos?",
+    a: (
+      <>
+        Yes. Scope a scan to a subpath via <code>exclude_paths</code> in <code>.infiniview.yml</code>, or rely on default scanners to walk the tree. For very large monorepos, lower <code>max_plans</code> and tighten exclusions to stay within the wall-clock cap.
+      </>
+    ),
+  },
+  {
+    q: "Can I run Infiniview from CI without the GitHub App?",
+    a: (
+      <>
+        Validation is available without the App — <code>POST /api/validate-infiniview-yml</code> is unauthenticated and safe to call from CI. Triggering a full scan still requires the GitHub App on the target repo or a manual scan launched from the dashboard.
+      </>
+    ),
+  },
+  {
+    q: "What happens to data after I cancel?",
+    a: (
+      <>
+        Reviews, runs, findings, and proof bundles remain readable through the retention window listed on your plan. New scans can&rsquo;t be launched after cancellation takes effect. See <Link href="/billing">Billing &amp; plans</Link>.
+      </>
+    ),
+  },
+  {
+    q: "Can I see the full list of changes between two scans?",
+    a: (
+      <>
+        Yes. <code>GET /api/scan-runs/{`{id}`}/compare</code> returns baseline counts plus delta movement (new, recurring, regressed, fixed, suppressed) for the run versus the previous successful scan on the same target. The dashboard&rsquo;s Compare panel renders the same data.
+      </>
+    ),
+  },
+  {
+    q: "How do I bulk-export everything?",
+    a: (
+      <>
+        Use <code>GET /api/security-findings/export?scope=all</code>. The backlog export streams CSV across active and archived runs. For per-run dumps, <code>GET /api/scan-runs/{`{id}`}/csv</code> is available once the run reaches a terminal status. See <Link href="/exports">Exports &amp; bundles</Link>.
+      </>
+    ),
+  },
 ];
 
 export default function FaqPage() {
