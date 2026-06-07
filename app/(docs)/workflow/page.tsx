@@ -6,7 +6,7 @@ import { Callout } from "@/components/callout";
 export const metadata: Metadata = {
   title: "Scan workflow",
   description:
-    "From trigger to proof bundle. Every scan moves through the same pipeline whether it was launched from the dashboard or a pull request.",
+    "From trigger to proof bundle. Every scan run moves through the same pipeline whether it was launched from the dashboard or a pull request.",
 };
 
 const phases = [
@@ -48,7 +48,7 @@ const phases = [
 ];
 
 const statuses = [
-  { id: "queued", label: "queued", body: "Scan accepted; waiting for a worker." },
+  { id: "queued", label: "queued", body: "Scan run accepted; waiting for a worker." },
   { id: "running", label: "running", body: "Pipeline in progress; live events stream to the UI." },
   { id: "completed", label: "completed", body: "Pipeline finished with full coverage." },
   {
@@ -69,9 +69,9 @@ export default function WorkflowPage() {
     <DocPage
       href="/workflow"
       title="Scan workflow"
-      description="From trigger to proof bundle. Every scan moves through the same pipeline whether it was launched from the dashboard or a pull request."
+      description="From trigger to proof bundle. Every scan run moves through the same pipeline whether it was launched from the dashboard or a pull request."
       toc={[
-        { id: "trigger", title: "Triggering a scan", depth: 2 },
+        { id: "trigger", title: "Triggering a scan run", depth: 2 },
         { id: "phases", title: "Pipeline phases", depth: 2 },
         { id: "snapshot", title: "Snapshot rules", depth: 2 },
         { id: "live", title: "Live progress", depth: 2 },
@@ -80,12 +80,12 @@ export default function WorkflowPage() {
       ]}
     >
       <h2 id="trigger" className="anchor-target">
-        Triggering a scan
+        Triggering a scan run
       </h2>
-      <p>You have four ways to start a scan:</p>
+      <p>You have four ways to start a scan run:</p>
       <ul>
         <li>
-          <strong>Dashboard</strong> — choose a repo and branch from Reviews.
+          <strong>Dashboard</strong> — choose a repo and branch from Reviews to create a review and start its first run.
         </li>
         <li>
           <strong>Pull request</strong> — open a PR or move it from draft to ready. The auto-review rules in <Link href="/github">Settings</Link> decide whether Infiniview runs.

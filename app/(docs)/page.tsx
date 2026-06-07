@@ -79,10 +79,10 @@ export default function IntroPage() {
         What is Infiniview
       </h2>
       <p>
-        Infiniview is a security review platform that takes a repository, builds and runs it in a sandbox, and combines static analysis, dependency audits, secret detection, IaC scanning, and runtime agents into one stream of evidence. Each scan persists severity, fingerprints, locations, replay artifacts, delta state, and suppression memory so you can decide what to fix without re-deriving context.
+        Infiniview is a security review platform that takes a repository, builds and runs it in a sandbox, and combines static analysis, dependency audits, secret detection, IaC scanning, and runtime agents into one stream of evidence. Each review can accumulate multiple scan runs; each run persists severity, fingerprints, locations, replay artifacts, delta state, and suppression memory so you can decide what to fix without re-deriving context.
       </p>
       <p>
-        You operate the product through the dashboard or directly from GitHub pull requests. Settings can live in the dashboard, the repo&rsquo;s <code>.infiniview.yml</code>, or both — repo config wins for overlapping fields, and every scan freezes the merged settings into a snapshot so changing settings mid-run never affects the active scan.
+        You operate the product through the dashboard or directly from GitHub pull requests. Settings can live in the dashboard, the repo&rsquo;s <code>.infiniview.yml</code>, or both — repo config wins for overlapping fields, and every scan run freezes the merged settings into a snapshot so changing settings mid-run never affects the active run.
       </p>
 
       <Callout tone="info">

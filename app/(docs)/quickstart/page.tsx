@@ -20,7 +20,7 @@ export default function QuickstartPage() {
         { id: "1-sign-in", title: "1. Sign in", depth: 2 },
         { id: "2-connect-github", title: "2. Connect GitHub", depth: 2 },
         { id: "3-install-app", title: "3. Install the GitHub App", depth: 2 },
-        { id: "4-run-scan", title: "4. Run your first scan", depth: 2 },
+        { id: "4-run-scan", title: "4. Create your first review", depth: 2 },
         { id: "5-decide", title: "5. Decide from findings", depth: 2 },
         { id: "next", title: "Where to go next", depth: 2 },
       ]}
@@ -40,7 +40,7 @@ export default function QuickstartPage() {
         1. Sign in to the dashboard
       </h2>
       <p>
-        Open <a href="https://app.infiniview.dev">app.infiniview.dev</a> and sign in. The dashboard lands on Reviews, which is empty until your first scan completes.
+        Open <a href="https://app.infiniview.dev">app.infiniview.dev</a> and sign in. The dashboard lands on Reviews, which is empty until your first review exists.
       </p>
 
       <h2 id="2-connect-github" className="anchor-target">
@@ -61,18 +61,18 @@ DELETE /api/github/disconnect   # remove the connection`}</code></pre>
       </p>
 
       <h2 id="4-run-scan" className="anchor-target">
-        4. Run your first scan
+        4. Create your first review
       </h2>
-      <p>You have three ways to launch a scan:</p>
+      <p>You have three ways to create a review or start a new scan run:</p>
       <ol>
         <li>
-          <strong>Dashboard:</strong> from Reviews, choose a repo and branch and start a manual scan.
+          <strong>Dashboard:</strong> from Reviews, choose a repo and branch. Infiniview creates the review and starts its first scan run.
         </li>
         <li>
           <strong>Pull request:</strong> open a PR (or move it from draft to ready). The auto-review rules in Configuration decide whether Infiniview runs.
         </li>
         <li>
-          <strong>Comment:</strong> post <code>@infiniview review</code> on a PR you&rsquo;re trusted on to start a manual PR scan.
+          <strong>Comment:</strong> post <code>@infiniview review</code> on a PR you&rsquo;re trusted on to create or rerun the PR review.
         </li>
       </ol>
 
@@ -80,7 +80,7 @@ DELETE /api/github/disconnect   # remove the connection`}</code></pre>
         5. Decide from findings
       </h2>
       <p>
-        When the scan completes, the run detail view shows the timeline, scanner coverage, story insights, and rerun availability. Use these views together:
+        When the scan run completes, the run detail view shows the timeline, scanner coverage, story insights, and rerun availability. Use these views together:
       </p>
       <ul>
         <li>
@@ -98,7 +98,7 @@ DELETE /api/github/disconnect   # remove the connection`}</code></pre>
       </ul>
 
       <Callout tone="ok" title="Done">
-        At this point you have a scan, a backlog, and a proof bundle endpoint per finding. Anything else is tuning.
+        At this point you have a review, its first scan run, a backlog, and a proof bundle endpoint per finding. Anything else is tuning.
       </Callout>
 
       <h2 id="next" className="anchor-target">

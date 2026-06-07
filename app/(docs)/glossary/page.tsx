@@ -18,7 +18,7 @@ const entries: Entry[] = [
     term: "Review",
     body: (
       <>
-        A persistent record of scans for a given repo and target — usually a branch or a pull request. A review accumulates one or more <strong>scan runs</strong> over its lifetime and is what you delete or archive when you&rsquo;re done with a target.
+        The user-facing product object for a given repo and target — usually a branch or a pull request. A review accumulates one or more <strong>scan runs</strong> over its lifetime and is what you open, rerun, delete, or archive.
       </>
     ),
   },
@@ -26,7 +26,7 @@ const entries: Entry[] = [
     term: "Scan run",
     body: (
       <>
-        A single execution of the scan pipeline against a review. Each run carries its own frozen configuration <Link href="#snapshot">snapshot</Link>, status, timeline, findings, trust score, and (when applicable) CSV and compare endpoints.
+        A single execution of the scan pipeline against a review. Each run carries its own frozen configuration <Link href="#snapshot">snapshot</Link>, status, timeline, findings, trust score, and (when applicable) CSV and compare endpoints. Use <em>scan</em> only as shorthand when the sentence is clearly about this execution, not the review container.
       </>
     ),
   },
